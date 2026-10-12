@@ -31,7 +31,7 @@ public class Main {
 
 
                 if (wybor.equals("1")) {
-                    System.out.println("Okej napisz jakie zadanie chcesz dodac");
+                    System.out.println("Napisz jakie zadanie chcesz dodac");
                     String quest = scanner.nextLine();
                     FileWriter myWriter = new FileWriter("JavaToDo.txt", true);
                     myWriter.write("\n" + lines + ". " + quest);
