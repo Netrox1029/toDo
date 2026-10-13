@@ -1,16 +1,15 @@
 package org.example;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 import java.io.File;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.List;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
 public class Main {
     public static void main(String[] args) {
+
+        linesCount lines = new linesCount();
         boolean working = true;
         while(working) {
             try {
@@ -24,23 +23,16 @@ public class Main {
                 System.out.println("4.Koniec");
                 String wybor = scanner.nextLine();
 
-
-                BufferedReader reader = new BufferedReader(new FileReader("JavaToDo.txt"));
-                int lines = 1;
-                while (reader.readLine() != null) lines++;
-                reader.close();
-
                 if(wybor.equals("1") || wybor.equals("2") ||wybor.equals("3") ||wybor.equals("4") ) {
                     if (wybor.equals("1")) {
                         System.out.println("Napisz jakie zadanie chcesz dodac");
                         String quest = scanner.nextLine();
                         FileWriter myWriter = new FileWriter("JavaToDo.txt", true);
-                        if(lines == 1) {
-                            myWriter.write(lines + ". " + quest);
-                        }else{
-                            myWriter.write("\n" + lines + ". " + quest);
-
+                        if(lines.getLines() > 1) {
+                            myWriter.write("\n");
                         }
+                        myWriter.write(lines.getLines() + "." + quest);
+
                         myWriter.close();
                         System.out.println("\n[Wciśnij Enter, aby wrócić do menu]");
                         scanner.nextLine();
@@ -53,11 +45,28 @@ public class Main {
                         int index = Integer.parseInt(delQuest) - 1;
                         System.out.println("Została usunieta linijka: " + list.get(index));
                         list.remove(index);
-                        FileWriter myWriter = new FileWriter("JavaToDo.txt");
-                        for (String line : list) {
-                            myWriter.write(line + "\n");
-                        }
 
+//                        FileWriter myWriter = new FileWriter("JavaToDo.txt");
+//                        for (int i = 0; i < list.size(); i++) {
+//                            myWriter.write(list.get(i));
+//                                if (i < list.size() - 1) {
+//                                    myWriter.write("\n");
+//                                }
+//                        }
+                        FileWriter myWriter = new FileWriter("JavaToDo.txt");
+                        for(int i = 0; i < list.size();i++) {
+
+                            String wholeLastText = list.get(i);//cały tekst.ostatnia rzecz w liscie
+                            String numToChange = wholeLastText.substring(1);//tekst od liczby.ostatnia rzecz w liscie
+                            //int numOfLines = list.size();//zwraca ile jest po zmianach rzeczy w liscie
+                            //System.out.println(numOfLines + "  " + numToChange + "   " + wholeLastText);
+                            String finalText = ((i+1) + numToChange);
+                            //System.out.println(finalText);
+                            myWriter.write(finalText);
+                            if (i < list.size() - 1) {
+                                myWriter.write("\n");
+                            }
+                        }
                         myWriter.close();
                         System.out.println("\n[Wciśnij Enter, aby wrócić do menu]");
                         scanner.nextLine();
@@ -76,10 +85,10 @@ public class Main {
                     System.out.println("\n[Wciśnij Enter, aby wrócić do menu]");
                     scanner.nextLine();
                 }
+
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }
     }
 }
-//scan.nextLine();
