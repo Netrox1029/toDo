@@ -20,10 +20,11 @@ public class Main {
                 System.out.println("1.Dodaj nowa rzecz do listy");
                 System.out.println("2.Usuń rzecz z listy");
                 System.out.println("3.Odpal liste");
-                System.out.println("4.Koniec");
+                System.out.println("4.Edytuj zadanie");
+                System.out.println("5.Koniec");
                 String wybor = scanner.nextLine();
 
-                if(wybor.equals("1") || wybor.equals("2") ||wybor.equals("3") ||wybor.equals("4") ) {
+                if(wybor.equals("1") || wybor.equals("2") ||wybor.equals("3") ||wybor.equals("4") || wybor.equals("5")) {
                     if (wybor.equals("1")) {
                         System.out.println("Napisz jakie zadanie chcesz dodac");
                         String quest = scanner.nextLine();
@@ -45,17 +46,8 @@ public class Main {
                         int index = Integer.parseInt(delQuest) - 1;
                         System.out.println("Została usunieta linijka: " + list.get(index));
                         list.remove(index);
-
-//                        FileWriter myWriter = new FileWriter("JavaToDo.txt");
-//                        for (int i = 0; i < list.size(); i++) {
-//                            myWriter.write(list.get(i));
-//                                if (i < list.size() - 1) {
-//                                    myWriter.write("\n");
-//                                }
-//                        }
                         FileWriter myWriter = new FileWriter("JavaToDo.txt");
                         for(int i = 0; i < list.size();i++) {
-
                             String wholeLastText = list.get(i);//cały tekst.ostatnia rzecz w liscie
                             String numToChange = wholeLastText.substring(1);//tekst od liczby.ostatnia rzecz w liscie
                             //int numOfLines = list.size();//zwraca ile jest po zmianach rzeczy w liscie
@@ -76,7 +68,30 @@ public class Main {
                         }
                         System.out.println("\n[Wciśnij Enter, aby wrócić do menu]");
                         scanner.nextLine();
-                    } else if (wybor.equals("4")) {
+                    }else if(wybor.equals("4")){
+                        for (int i = 0; i < list.size(); i++) {
+                            System.out.println(list.get(i));
+                        }
+                        System.out.println("Która linijke chcesz edytowac");
+                        String delQuest = scanner.nextLine();
+                        System.out.println("Podaj nowa treść");
+                        String textToChange = scanner.nextLine();
+                        int index = Integer.parseInt(delQuest) - 1;
+                        FileWriter myWriter = new FileWriter("JavaToDo.txt");
+                        list.set(index,index + "." + textToChange);
+                        for(int i = 0; i < list.size();i++) {
+                                String wholeLastText = list.get(i);
+                                String numToChange = wholeLastText.substring(1);
+                                String finalText = ((i+1) + numToChange);
+                                myWriter.write(finalText);
+                            if (i < list.size() - 1) {
+                                myWriter.write("\n");
+                            }
+                        }
+                        myWriter.close();
+                        System.out.println("\n[Wciśnij Enter, aby wrócić do menu]");
+                        scanner.nextLine();
+                    }else if (wybor.equals("5")) {
                         System.out.println("Koniec programu");
                         working = false;
                     }
